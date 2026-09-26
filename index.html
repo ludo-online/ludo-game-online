@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Ludo King - Play Now</title>
+
+<!-- OPEN GRAPH -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Ludo King - Play Now">
+<meta property="og:description" content="Play Ludo King with your friends. Enjoy voice chat and win exciting rewards!">
+<meta property="og:image" content="https://i.postimg.cc/cJKXfss2/ludo-1200x630-under-500kb.jpg">
+<meta property="og:image:secure_url" content="https://i.postimg.cc/cJKXfss2/ludo-1200x630-under-500kb.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:type" content="image/jpeg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Ludo King - Play Now">
+<meta name="twitter:description" content="Play Ludo King with your friends!">
+<meta name="twitter:image" content="https://i.postimg.cc/cJKXfss2/ludo-1200x630-under-500kb.jpg">
+
+<link rel="icon" type="image/jpeg" href="https://i.postimg.cc/cJKXfss2/ludo-1200x630-under-500kb.jpg">
+<link rel="apple-touch-icon" href="https://i.postimg.cc/cJKXfss2/ludo-1200x630-under-500kb.jpg">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
+    height: 100%;
+    width: 100%;
+    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+    overflow: hidden;
+    background: #1a0033;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-font-smoothing: antialiased;
+    -webkit-user-select: none;
+    user-select: none;
+    /* GPU acceleration hint */
+    transform: translateZ(0);
+}
+
+/* ============================
+   ⭐ SIMPLE BACKGROUND — 1 LAYER ONLY
+   ============================ */
+.bg {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    background: 
+        radial-gradient(ellipse 80% 60% at 50% 40%, #4a0e6b 0%, transparent 60%),
+        linear-gradient(180deg, #240046 0%, #14002b 50%, #0a0018 100%);
+}
+
+/* Single soft glow — no blur */
+.glow {
+    position: fixed;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90vw;
+    height: 90vw;
+    max-width: 600px;
+    max-height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(168, 85, 247, 0.35) 0%, transparent 65%);
+    z-index: 1;
+    pointer-events: none;
+    animation: glowPulse 5s ease-in-out infinite;
+    will-change: opacity;
+}
+
+@keyframes glowPulse {
+    0%, 100% { opacity: 0.7; }
+    50%      { opacity: 1; }
+}
+
+/* ============================
+   FEW LIGHT PARTICLES
+   ============================ */
+.particles {
+    position: fixed;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.particle {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    opacity: 0.7;
+    animation: particleFloat linear infinite;
+    will-change: transform, opacity;
+}
+
+@keyframes particleFloat {
+    0%   { transform: translate3d(0, 100vh, 0); opacity: 0; }
+    10%  { opacity: 0.9; }
+    90%  { opacity: 0.9; }
+    100% { transform: translate3d(0, -50px, 0); opacity: 0; }
+}
+
+/* ============================
+   PAGE LAYOUT
+   ============================ */
+.page {
+    position: fixed;
+    inset: 0;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 24px;
+    text-align: center;
+}
+
+/* ============================
+   TITLE
+   ============================ */
+.title {
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(40px, 10vw, 72px);
+    font-weight: 900;
+    letter-spacing: 2px;
+    line-height: 1;
+    text-transform: uppercase;
+    margin-bottom: 22px;
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.title .ludo {
+    color: #d4c2a8;
+    text-shadow: 0 0 20px rgba(212, 194, 168, 0.4);
+}
+
+.title .king {
+    color: #4d94ff;
+    text-shadow: 0 0 20px rgba(77, 148, 255, 0.6);
+}
+
+/* ============================
+   VOICE CHAT
+   ============================ */
+.voice-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    margin-bottom: 45px;
+}
+
+.mic-circle {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #e879f9 0%, #a855f7 50%, #7c3aed 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 
+        0 0 20px rgba(168, 85, 247, 0.7),
+        inset 0 -3px 6px rgba(0, 0, 0, 0.3),
+        inset 0 3px 6px rgba(255, 255, 255, 0.3);
+    animation: micPulse 2s ease-in-out infinite;
+    flex-shrink: 0;
+    will-change: transform;
+}
+
+@keyframes micPulse {
+    0%, 100% { transform: scale(1); }
+    50%      { transform: scale(1.06); }
+}
+
+.mic-icon {
+    font-size: 22px;
+    filter: brightness(1.2);
+}
+
+.voice-text {
+    font-size: clamp(14px, 3.5vw, 17px);
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.9);
+    letter-spacing: 0.3px;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* ============================
+   3D DICE SCENE
+   ============================ */
+.dice-scene {
+    position: relative;
+    width: min(380px, 90vw);
+    height: min(200px, 52vw);
+    margin-bottom: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    perspective: 1000px;
+}
+
+.dice-wrap {
+    position: absolute;
+    transform-style: preserve-3d;
+}
+
+.dice-wrap.d1 { 
+    left: 3%; 
+    top: 50%; 
+    margin-top: -50px;
+    animation: diceFloat1 4s ease-in-out infinite;
+}
+.dice-wrap.d2 { 
+    left: 50%; 
+    top: 50%; 
+    transform: translateX(-50%);
+    margin-top: -55px;
+    z-index: 5;
+    animation: diceFloat2 4s ease-in-out infinite;
+}
+.dice-wrap.d3 { 
+    right: 3%; 
+    top: 50%; 
+    margin-top: -50px;
+    animation: diceFloat3 4s ease-in-out infinite;
+}
+
+@keyframes diceFloat1 {
+    0%, 100% { transform: translate3d(0, 0, 0); }
+    50%      { transform: translate3d(0, -10px, 0); }
+}
+@keyframes diceFloat2 {
+    0%, 100% { transform: translate3d(-50%, -8px, 0); }
+    50%      { transform: translate3d(-50%, 0, 0); }
+}
+@keyframes diceFloat3 {
+    0%, 100% { transform: translate3d(0, -5px, 0); }
+    50%      { transform: translate3d(0, -15px, 0); }
+}
+
+.dice {
+    width: 90px;
+    height: 90px;
+    position: relative;
+    transform-style: preserve-3d;
+    will-change: transform;
+}
+
+.dice-wrap.d1 .dice { animation: spinDice1 9s linear infinite; }
+.dice-wrap.d2 .dice { animation: spinDice2 11s linear infinite; }
+.dice-wrap.d3 .dice { animation: spinDice3 10s linear infinite; }
+
+@keyframes spinDice1 {
+    0%   { transform: rotateX(0deg) rotateY(0deg); }
+    100% { transform: rotateX(360deg) rotateY(360deg); }
+}
+@keyframes spinDice2 {
+    0%   { transform: rotateX(-15deg) rotateY(-20deg); }
+    100% { transform: rotateX(345deg) rotateY(340deg); }
+}
+@keyframes spinDice3 {
+    0%   { transform: rotateX(0deg) rotateY(0deg); }
+    100% { transform: rotateX(-360deg) rotateY(360deg); }
+}
+
+.face {
+    position: absolute;
+    width: 90px;
+    height: 90px;
+    background: linear-gradient(145deg, #ffffff 0%, #f0f0f0 100%);
+    border-radius: 14px;
+    border: 3px solid #fbbf24;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    padding: 10px;
+    gap: 3px;
+    backface-visibility: hidden;
+}
+
+.face-front  { transform: translateZ(45px); }
+.face-back   { transform: rotateY(180deg) translateZ(45px); }
+.face-right  { transform: rotateY(90deg) translateZ(45px); }
+.face-left   { transform: rotateY(-90deg) translateZ(45px); }
+.face-top    { transform: rotateX(90deg) translateZ(45px); }
+.face-bottom { transform: rotateX(-90deg) translateZ(45px); }
+
+.dot {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dot::before {
+    content: '';
+    width: 65%;
+    height: 65%;
+    background: radial-gradient(circle at 35% 35%, #f87171 0%, #dc2626 100%);
+    border-radius: 50%;
+}
+
+.dot.empty::before { display: none; }
+
+.face-1 .c5::before { display: block; }
+.face-2 .c1::before, .face-2 .c9::before { display: block; }
+.face-3 .c1::before, .face-3 .c5::before, .face-3 .c9::before { display: block; }
+.face-4 .c1::before, .face-4 .c3::before, .face-4 .c7::before, .face-4 .c9::before { display: block; }
+.face-5 .c1::before, .face-5 .c3::before, .face-5 .c5::before, .face-5 .c7::before, .face-5 .c9::before { display: block; }
+.face-6 .c1::before, .face-6 .c3::before, .face-6 .c4::before, .face-6 .c6::before, .face-6 .c7::before, .face-6 .c9::before { display: block; }
+
+/* ============================
+   4 BALLS
+   ============================ */
+.balls-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 45px;
+}
+
+.ball {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    position: relative;
+    animation: ballBounce 2s ease-in-out infinite;
+    will-change: transform;
+}
+
+.ball::before {
+    content: '';
+    position: absolute;
+    top: 15%;
+    left: 20%;
+    width: 30%;
+    height: 25%;
+    background: rgba(255, 255, 255, 0.6);
+    border-radius: 50%;
+}
+
+.ball-red {
+    background: radial-gradient(circle at 30% 30%, #ff5577 0%, #e11d48 70%, #9f1239 100%);
+    box-shadow: 0 4px 10px rgba(225, 29, 72, 0.4);
+}
+.ball-blue {
+    background: radial-gradient(circle at 30% 30%, #60a5fa 0%, #2563eb 70%, #1e40af 100%);
+    box-shadow: 0 4px 10px rgba(37, 99, 235, 0.4);
+    animation-delay: 0.15s;
+}
+.ball-yellow {
+    background: radial-gradient(circle at 30% 30%, #fde047 0%, #eab308 70%, #a16207 100%);
+    box-shadow: 0 4px 10px rgba(234, 179, 8, 0.4);
+    animation-delay: 0.3s;
+}
+.ball-green {
+    background: radial-gradient(circle at 30% 30%, #4ade80 0%, #16a34a 70%, #166534 100%);
+    box-shadow: 0 4px 10px rgba(22, 163, 74, 0.4);
+    animation-delay: 0.45s;
+}
+
+@keyframes ballBounce {
+    0%, 100% { transform: translate3d(0, 0, 0); }
+    50%      { transform: translate3d(0, -10px, 0); }
+}
+
+/* ============================
+   PLAY NOW
+   ============================ */
+.play-btn-wrap {
+    position: relative;
+    display: inline-block;
+    padding: 20px;
+}
+
+.dashed-circle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 260px;
+    height: 260px;
+    border: 2px dashed rgba(251, 191, 36, 0.6);
+    border-radius: 50%;
+    animation: rotateCircle 30s linear infinite;
+    pointer-events: none;
+    will-change: transform;
+}
+
+@keyframes rotateCircle {
+    0%   { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+.play-btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    padding: 22px 70px;
+    background: linear-gradient(135deg, #ec4899 0%, #d946ef 50%, #a855f7 100%);
+    border: none;
+    border-radius: 100px;
+    color: #ffffff;
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(20px, 5vw, 26px);
+    font-weight: 800;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    cursor: pointer;
+    overflow: hidden;
+    transition: transform 0.2s ease;
+    box-shadow: 
+        0 0 25px rgba(217, 70, 239, 0.55),
+        0 0 50px rgba(168, 85, 247, 0.35),
+        0 10px 25px rgba(0, 0, 0, 0.4),
+        inset 0 -5px 10px rgba(0, 0, 0, 0.15),
+        inset 0 5px 10px rgba(255, 255, 255, 0.15);
+    animation: playBtnPulse 3s ease-in-out infinite;
+    will-change: box-shadow;
+}
+
+@keyframes playBtnPulse {
+    0%, 100% { 
+        box-shadow: 
+            0 0 25px rgba(217, 70, 239, 0.55),
+            0 0 50px rgba(168, 85, 247, 0.35),
+            0 10px 25px rgba(0, 0, 0, 0.4),
+            inset 0 -5px 10px rgba(0, 0, 0, 0.15),
+            inset 0 5px 10px rgba(255, 255, 255, 0.15);
+    }
+    50% { 
+        box-shadow: 
+            0 0 40px rgba(217, 70, 239, 0.85),
+            0 0 80px rgba(168, 85, 247, 0.6),
+            0 12px 30px rgba(0, 0, 0, 0.5),
+            inset 0 -5px 10px rgba(0, 0, 0, 0.15),
+            inset 0 5px 10px rgba(255, 255, 255, 0.15);
+    }
+}
+
+.play-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+    transform: skewX(-25deg);
+    animation: btnShine 4s ease-in-out infinite;
+}
+
+@keyframes btnShine {
+    0% { left: -100%; }
+    50%, 100% { left: 150%; }
+}
+
+.play-btn:active {
+    transform: scale(0.97);
+}
+
+.play-icon {
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 11px 0 11px 18px;
+    border-color: transparent transparent transparent #ffffff;
+    flex-shrink: 0;
+}
+
+/* ============================
+   RESPONSIVE
+   ============================ */
+@media (max-width: 480px) {
+    .title { gap: 10px; }
+    
+    .dice { width: 75px; height: 75px; }
+    .face {
+        width: 75px;
+        height: 75px;
+        padding: 8px;
+        gap: 2px;
+        border-radius: 12px;
+    }
+    .face-front  { transform: translateZ(37.5px); }
+    .face-back   { transform: rotateY(180deg) translateZ(37.5px); }
+    .face-right  { transform: rotateY(90deg) translateZ(37.5px); }
+    .face-left   { transform: rotateY(-90deg) translateZ(37.5px); }
+    .face-top    { transform: rotateX(90deg) translateZ(37.5px); }
+    .face-bottom { transform: rotateX(-90deg) translateZ(37.5px); }
+    
+    .dice-wrap.d1 { margin-top: -42px; }
+    .dice-wrap.d2 { margin-top: -45px; }
+    .dice-wrap.d3 { margin-top: -42px; }
+    
+    .ball { width: 38px; height: 38px; }
+    .balls-row { gap: 14px; }
+    
+    .play-btn { padding: 18px 55px; letter-spacing: 2.5px; gap: 10px; }
+    .play-icon { border-width: 9px 0 9px 15px; }
+    
+    .dashed-circle { width: 210px; height: 210px; }
+    
+    .mic-circle { width: 40px; height: 40px; }
+    .mic-icon { font-size: 19px; }
+    
+    .voice-row { gap: 10px; margin-bottom: 35px; }
+    .balls-row { margin-bottom: 35px; }
+}
+
+@media (max-width: 360px) {
+    .dice { width: 62px; height: 62px; }
+    .face {
+        width: 62px;
+        height: 62px;
+        padding: 6px;
+        gap: 1px;
+        border-radius: 10px;
+    }
+    .face-front  { transform: translateZ(31px); }
+    .face-back   { transform: rotateY(180deg) translateZ(31px); }
+    .face-right  { transform: rotateY(90deg) translateZ(31px); }
+    .face-left   { transform: rotateY(-90deg) translateZ(31px); }
+    .face-top    { transform: rotateX(90deg) translateZ(31px); }
+    .face-bottom { transform: rotateX(-90deg) translateZ(31px); }
+    
+    .dice-wrap.d1 { margin-top: -35px; }
+    .dice-wrap.d2 { margin-top: -38px; }
+    .dice-wrap.d3 { margin-top: -35px; }
+    
+    .ball { width: 32px; height: 32px; }
+    .balls-row { gap: 10px; }
+    
+    .play-btn { padding: 16px 45px; letter-spacing: 2px; }
+    .dashed-circle { width: 180px; height: 180px; }
+}
+
+/* Reduce motion for accessibility + performance */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- Simple Background -->
+<div class="bg"></div>
+<div class="glow"></div>
+
+<!-- Few particles -->
+<div class="particles" id="particles"></div>
+
+<!-- PAGE -->
+<div class="page">
+
+    <div class="title">
+        <span class="ludo">LUDO</span>
+        <span class="king">KING</span>
+    </div>
+
+    <div class="voice-row">
+        <div class="mic-circle">
+            <span class="mic-icon">🎤</span>
+        </div>
+        <p class="voice-text">Enjoy voice chat with game friend</p>
+    </div>
+
+    <div class="dice-scene">
+        <!-- Dice 1 -->
+        <div class="dice-wrap d1">
+            <div class="dice">
+                <div class="face face-front face-5">
+                    <div class="c1 dot"></div><div class="c2 dot empty"></div><div class="c3 dot"></div>
+                    <div class="c4 dot empty"></div><div class="c5 dot"></div><div class="c6 dot empty"></div>
+                    <div class="c7 dot"></div><div class="c8 dot empty"></div><div class="c9 dot"></div>
+                </div>
+                <div class="face face-back face-2">
+                    <div class="c1 dot"></div><div class="c2 dot empty"></div><div class="c3 dot empty"></div>
+                    <div class="c4 dot empty"></div><div class="c5 dot empty"></div><div class="c6 dot empty"></div>
+                    <div class="c7 dot empty"></div><div class="c8 dot empty"></div><div class="c9 dot"></div>
+                </div>
+                <div class="face face-right face-4">
+                    <div class="c1 dot"></div><div class="c2 dot empty"></div><div class="c3 dot"></div>
+                    <div class="c4 dot empty"></div><div class="c5 dot empty"></div><div class="c6 dot empty"></div>
+                    <div class="c7 dot"></div><div class="c8 dot empty"></div><div class="c9 dot"></div>
+                </div>
+                <div class="face face-left face-3">
+                    <div class="c1 dot"></div><div class="c2 dot empty"></div><div class="c3 dot empty"></div>
+                    <div class="c4 dot empty"></div><div class="c5 dot"></div><div class="c6 dot empty"></div>
+                    <div class="c7 dot empty"></div><div class="c8 dot empty"></div><div class="c9 dot"></div>
+                </div>
+                <div class="face face-top face-1">
+                    <div class="c1 dot empty"></div><div class="c2 dot empty"></div><div class="c3 dot empty"></div>
+                    <div class="c4 dot empty"></div><div class="c5 dot"></div><div class="c6 dot empty"></div>
+                    <div class="c7 dot empty"></div><div class="c8 dot empty"></div><div class="c9 dot empty"></div>
+                </div>
+                <div class="face face-bottom face-6">
+                    <div class="c1 dot"></div><div class="c2 dot empty"></div><div class="c3 dot"></div>
+                    <div class="c4 dot"></div><div class="c5 dot empty"></div><div class="c6 dot"></div>
+                    <div class="c7 dot"></div><div class="c8 dot empty"></div><div class="c9 dot"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dice 2 -->
+        <div class="dice-wrap d2">
+            <div class="dice">
+                <div class="face face-front face-3">
+                    <div class="c1 dot"></div><div class="c2 dot empty"></div><div class="c3 dot empty"></div>
+                    <div class="c4 dot empty"></div><div class="c5 dot"></div><div class="c6 dot empty"></div>
+                    <div class="c7 dot empty"></div><div class="c8 dot empty"></div><div class="c9 dot"></div>
+                </div>
+                <div class="face face-back face-4">
+                    <div class="c1 dot"></div><div class="c2 dot empty"></div><div class="c3 dot"></div>
+                    <div class="c4 dot empty"></div><div class="c5 dot empty"></div><div class="c6 dot empty"></div>
+                    <div class="c7 dot"></div><div class="c8 dot empty"></div><div class="c9 dot"></div>
+                </div>
+                <div class="face face-right face-1">
+                    <div class="c1 dot empty"></div><div class="c2 dot empty"></div><div class="c3 dot empty"></div>
+                    <div class="c4 dot empty"></div><div class="c5 dot"></div><div class="c6 dot empty"></div>
+                    <div class="c7 dot empty"></div><div class="c8 dot empty"></div><div class="c9 dot empty"></div>
+                </div>
+                <div class="face face-left face-6">
+                    <div class="c1 dot"></div><div class="c2 dot empty"></div><div class="c3 dot"></div>
+                    <div class="c4 dot"></div><div class="c5 dot empty"></div><div class="c6 dot"></div>
+                    <div class="c7 dot"></div><div class="c8 dot empty"></div><div class="c9 dot"></div>
+                </div>
+                <div class="face face-top face-5">
+                    <div class="c1 dot"></div><div class="c2 dot empty"></div><div class="c3 dot"></div>
+                    <div class="c4 dot empty"></div><div class="c5 dot"></div><div class="c6 dot empty"></div>
+                    <div class="c7 dot"></div><div class="c8 dot empty"></div><div class="c9 dot"></div>
+                </div>
+                <div class="face face-bottom face-2">
+                    <div class="c1 dot"></div><div class="c2 dot empty"></div><div class="c3 dot empty"></div>
+                    <div class="c4 dot empty"></div><div class="c5 dot empty"></div><div class="c6 dot empty"></div>
+                    <div class="c7 dot empty"></div><div class="c8 dot empty"></div><div class="c9 dot"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dice 3 -->
+        <div class="dice-wrap d3">
+            <div class="dice">
+                <div class="face face-front face-5">
+                    <div class="c1 dot"></div><div class="c2 dot empty"></div><div class="c3 dot"></div>
+                    <div class="c4 dot empty"></div><div class="c5 dot"></div><div class="c6 dot empty"></div>
+                    <div class="c7 dot"></div><div class="c8 dot empty"></div><div class="c9 dot"></div>
+                </div>
+                <div class="face face-back face-3">
+                    <div class="c1 dot"></div><div class="c2 dot empty"></div><div class="c3 dot empty"></div>
+                    <div class="c4 dot empty"></div><div class="c5 dot"></div><div class="c6 dot empty"></div>
+                    <div class="c7 dot empty"></div><div class="c8 dot empty"></div><div class="c9 dot"></div>
+                </div>
+                <div class="face face-right face-2">
+                    <div class="c1 dot"></div><div class="c2 dot empty"></div><div class="c3 dot empty"></div>
+                    <div class="c4 dot empty"></div><div class="c5 dot empty"></div><div class="c6 dot empty"></div>
+                    <div class="c7 dot empty"></div><div class="c8 dot empty"></div><div class="c9 dot"></div>
+                </div>
+                <div class="face face-left face-4">
+                    <div class="c1 dot"></div><div class="c2 dot empty"></div><div class="c3 dot"></div>
+                    <div class="c4 dot empty"></div><div class="c5 dot empty"></div><div class="c6 dot empty"></div>
+                    <div class="c7 dot"></div><div class="c8 dot empty"></div><div class="c9 dot"></div>
+                </div>
+                <div class="face face-top face-6">
+                    <div class="c1 dot"></div><div class="c2 dot empty"></div><div class="c3 dot"></div>
+                    <div class="c4 dot"></div><div class="c5 dot empty"></div><div class="c6 dot"></div>
+                    <div class="c7 dot"></div><div class="c8 dot empty"></div><div class="c9 dot"></div>
+                </div>
+                <div class="face face-bottom face-1">
+                    <div class="c1 dot empty"></div><div class="c2 dot empty"></div><div class="c3 dot empty"></div>
+                    <div class="c4 dot empty"></div><div class="c5 dot"></div><div class="c6 dot empty"></div>
+                    <div class="c7 dot empty"></div><div class="c8 dot empty"></div><div class="c9 dot empty"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="balls-row">
+        <div class="ball ball-red"></div>
+        <div class="ball ball-blue"></div>
+        <div class="ball ball-yellow"></div>
+        <div class="ball ball-green"></div>
+    </div>
+
+    <div class="play-btn-wrap">
+        <div class="dashed-circle"></div>
+        <button class="play-btn" id="playBtn" type="button">
+            <span class="play-icon"></span>
+            <span>PLAY NOW</span>
+        </button>
+    </div>
+
+</div>
+
+<script>
+/* =========================================
+   CONFIGURATION
+   ========================================= */
+const REDIRECT_URL = 'https://ludo-logni.infinityfree.io/';
+/* ========================================= */
+
+/* =========================================
+   ONLY 15 PARTICLES (was 40)
+   ========================================= */
+(function createParticles() {
+    const container = document.getElementById('particles');
+    const colors = ['#c084fc', '#e879f9', '#a855f7', '#fbbf24', '#60a5fa'];
+    
+    for (let i = 0; i < 15; i++) {
+        const p = document.createElement('div');
+        p.className = 'particle';
+        const color = colors[Math.floor(Math.random() * colors.length)];
+        p.style.left = Math.random() * 100 + '%';
+        p.style.background = color;
+        p.style.boxShadow = `0 0 6px ${color}`;
+        p.style.animationDuration = (14 + Math.random() * 10) + 's';
+        p.style.animationDelay = Math.random() * 15 + 's';
+        container.appendChild(p);
+    }
+})();
+
+/* =========================================
+   PLAY NOW → Redirect
+   ========================================= */
+document.getElementById('playBtn').addEventListener('click', () => {
+    window.location.href = REDIRECT_URL;
+});
+
+document.addEventListener('contextmenu', (e) => {
+    e.preventDefault();
+});
+</script>
+
+</body>
+</html>
